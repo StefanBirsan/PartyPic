@@ -27,7 +27,7 @@ const FolderDetails = () => {
                         <Text style={styles.texts4}>Date</Text>
                     </View>
                     <View style={[styles.roundedBackground, Platform.OS === 'android' && styles.androidShadow ]}>
-                        <Text style={styles.texts6}>Deleting in:</Text>
+                        <Text style={styles.texts6}>Deleting in</Text>
                     </View>
                     <View style={[styles.roundedBackground, Platform.OS === 'android' && styles.androidShadow ]}>
                         <Text style={styles.texts2}>timeuntil</Text>

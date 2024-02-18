@@ -11,14 +11,14 @@ const Folderscreen = () => {
                 return value
             }
         } catch (e) {
-            console.log(e)
+
         }}
 
     const [foldername, setFoldername] = useState("")
 
     useEffect(() => {
         getData().then(response =>{
-            console.log(response)
+
             setFoldername(response)
         })
     }, []);
@@ -39,20 +39,13 @@ const Folderscreen = () => {
 
     return (
         <View style={styles.Smekcontainer}>
+
             <View style={styles.topsmekcont}>
-                <Text style={styles.textsmek}>Folder Code: {foldername}</Text>
 
-                <TouchableOpacity
-                    style={styles.resetbutton}
-                    onPress={() => AsyncStorage.clear()}
-                >
-                    <Text>Ma arunc in cada</Text>
-                </TouchableOpacity>
+                <Text style={styles.textsmek}>Folder Name: {foldername}</Text>
 
             </View>
-            <View style={styles.bottomContainer}>
-               <ButtonUP/>
-            </View>
+
         </View>
     );
 };
@@ -74,14 +67,14 @@ const styles = StyleSheet.create({
     textsmek: {
         color: "#fff",
         fontSize: 27,
-        position: 'absolute', // Position text absolutely
-        top: 30, // Set top edge to top of container
-        left: 10, // Set left edge to left of container
+        position: 'absolute',
+        top: 30,
+        left: 10,
     },
     buttonup: {
         position: 'absolute',
-        bottom: 0, // Set bottom edge to bottom of container
-        left: '45%', // Position 50% to the left
+        bottom: 0,
+        left: '45%',
 
     },
     resetbutton: {

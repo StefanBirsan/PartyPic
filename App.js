@@ -6,51 +6,50 @@ import {createStackNavigator} from "@react-navigation/stack";
 const StackNav = createStackNavigator();
 
 export default function App() {
-  return (
-      <NavigationContainer>
+    return (
+        <NavigationContainer>
 
-        <StackNav.Navigator>
+            <StackNav.Navigator>
 
-          <StackNav.Screen
+                <StackNav.Screen
 
-              options={{
-                title: 'PartyPic',
-                headerStyle: {
-                  backgroundColor: '#F6B17A',
-                },
-                headerTintColor: '#424769',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                  fontSize: 25,
-                },
-              }}
-              name="Home"
-              component={MainScreen} />
+                    options={{
+                        title: 'PartyPic',
+                        headerStyle: {
+                            backgroundColor: '#F6B17A',
+                        },
+                        headerTintColor: '#424769',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            fontSize: 25,
+                        },
+                    }}
+                    name="Home"
+                    component={MainScreen} />
 
-          <StackNav.Screen
+                <StackNav.Screen
 
-              options={{
-                title: 'Folder',
-                headerStyle: {
-                  backgroundColor: '#F6B17A',
-                },
-                headerTintColor: '#424769',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                  fontSize: 25,
-                },
-              }}
+                    options={{
+                        title: 'Folder',
+                        headerStyle: {
+                            backgroundColor: '#F6B17A',
+                        },
+                        headerTintColor: '#424769',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            fontSize: 25,
+                        },
+                    }}
 
-              name="Folderscreen"
+                    name="Folderscreen"
 
-              component={Folderscreen}
-          />
-        </StackNav.Navigator>
+                    component={Folderscreen}
+                />
+            </StackNav.Navigator>
 
-      </NavigationContainer>
+        </NavigationContainer>
 
 
-  );
+    );
 }
-
 

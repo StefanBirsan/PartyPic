@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from "react-native";
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView , Dimensions} from "react-native";
 import { firebase } from "../Scripts/config";
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 
-
-
-const ButtonUp  = () => {
+const ButtonUp = () => {
     const [image, setImage] = useState(null);
     const [uploading, setUploading] = useState(false);
 
-    const pickImage = async ()  => {
+    const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,  //Images and Videos
             allowsEditing: true,
-            aspect: [4,3],
+            aspect: [4, 3],
             quality: 1,
         });
 
-        if (!result.canceled) {
+        if (!result.cancelled) {
             setImage(result.assets[0].uri);
+            uploadMedia(result.assets[0].uri); // Call uploadMedia function after picking image
         }
     };
 
-    const uploadMedia = async () => {
+    const uploadMedia = async (imageUri) => {
         setUploading(true);
         try {
-            const { uri } = await FileSystem.getInfoAsync(image);
+            const { uri } = await FileSystem.getInfoAsync(imageUri);
             const blob = await new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
                 xhr.onload = () => {
@@ -40,10 +39,10 @@ const ButtonUp  = () => {
                 xhr.send(null);
             });
 
-            const filename = image.substring(image.lastIndexOf('/') + 1);
+            const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
             const ref = firebase.storage().ref().child(`images/${filename}`);
 
-            await  ref.put(blob);
+            await ref.put(blob);
             setUploading(false);
             Alert.alert('File has been Uploaded!');
             setImage(null);
@@ -57,20 +56,14 @@ const ButtonUp  = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={styles.selectButton} onPress={pickImage}>
-                <Text style={styles.buttonText}>Pick your FILE</Text>
-            </TouchableOpacity>
-            <View style={styles.imageContainer}>
-                {image && <Image
-                    source={{uri: image}}
-                    style={{width:150, height: 150}}
-                />}
-            </View>
-            <TouchableOpacity onPress={uploadMedia}>
-                <Image style={styles.img} source={require('../assets/uploadIMG.png')} />
-            </TouchableOpacity>
-        </SafeAreaView>
 
+            <TouchableOpacity style={styles.selectButton} onPress={pickImage}>
+
+                <Image style={styles.img} source={require('../assets/uploadIMG.png')} />
+
+            </TouchableOpacity>
+
+        </SafeAreaView>
     );
 };
 
@@ -82,25 +75,23 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontWeight: 'bold',
-
     },
     container: {
         alignItems: "center",
     },
-
     imageContainer: {
         marginTop: 15,
         marginBottom: 10,
-        alignItems:"center",
+        alignItems: "center",
     },
-
     selectButton: {
-        borderRadius: 25,
-        width: 110,
-        height: 50,
-        backgroundColor: '#9f79ad',
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: Dimensions.get('window').width * 0.2,
+        height: Dimensions.get('window').width * 0.2,
+        backgroundColor:'#7077A1',
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 10,
     }
 });
 

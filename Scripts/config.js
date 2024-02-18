@@ -1,6 +1,8 @@
 import firebase from "firebase/compat";
 import 'firebase/compat/storage';
 
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyCkLm3H6y-V6vS7jU8XC-nqtyqpHCcWBfQ",
     authDomain: "partypic-80f7f.firebaseapp.com",
@@ -16,3 +18,4 @@ if (!firebase.apps.length) {
 }
 
 export { firebase };
+

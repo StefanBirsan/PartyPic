@@ -2,14 +2,40 @@ import {NavigationContainer} from '@react-navigation/native';
 import Folderscreen from "./CustomScreens/Folderscreen";
 import MainScreen from "./CustomScreens/Mainscreen"
 import {createStackNavigator} from "@react-navigation/stack";
+import LoginScreen from "./CustomScreens/LoginScreen";
 
 const StackNav = createStackNavigator();
 
 export default function App() {
+
+
     return (
         <NavigationContainer>
 
-            <StackNav.Navigator>
+            <StackNav.Navigator
+                initialRouteName={'Login'}
+                headerShown="false"
+            >
+
+                <StackNav.Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{
+                        title: 'Login',
+                        headerStyle: {
+                            backgroundColor: '#F6B17A',
+                        },
+                        headerTintColor: '#424769',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            fontSize: 25,
+
+
+                        },
+                    }}
+
+                />
+
 
                 <StackNav.Screen
 

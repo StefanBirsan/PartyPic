@@ -1,54 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import {Alert, Image, Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-
-
-function generateString() {
-
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-
-    let counter = 0;
-
-    while (counter < 8) {
-
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-
-        counter += 1;
-    }
-    return result;
-}
-
-
+import React  from 'react';
+import {Image, Platform, StyleSheet,TouchableOpacity, View} from "react-native";
+//import { useNavigation } from '@react-navigation/native';
 
 const ButtonGEn = () => {
 
-    const saveData = async () => {
-        try {
-            const folderName = generateString()
-
-            console.log(JSON.stringify(folderName))
-
-            await AsyncStorage.setItem('folder', folderName)
-
-            Alert.alert('Your folder code: ' + folderName);
-
-        } catch (e) {
-
-        console.log(e)
-
-    }}
+    //const navigation = useNavigation();
 
     return (
         <TouchableOpacity
 
-            onPress={() => {
-
-                saveData()
-
-            }}
+            //onPress={() => navigation.navigate("Foldergen")}
         >
             <View style={[styles.viewsmek, Platform.OS === 'android' && styles.androidShadow]}>
 

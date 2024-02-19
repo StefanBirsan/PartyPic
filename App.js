@@ -3,6 +3,7 @@ import Folderscreen from "./CustomScreens/Folderscreen";
 import MainScreen from "./CustomScreens/Mainscreen"
 import {createStackNavigator} from "@react-navigation/stack";
 import LoginScreen from "./CustomScreens/LoginScreen";
+import GenerateFold from "./CustomScreens/GenerateFold";
 
 const StackNav = createStackNavigator();
 
@@ -71,6 +72,24 @@ export default function App() {
 
                     component={Folderscreen}
                 />
+
+                <StackNav.Screen
+                    name="Foldergen"
+
+                    options={{
+                        title: 'Folder generate',
+                        headerStyle: {
+                            backgroundColor: '#F6B17A',
+                        },
+                        headerTintColor: '#424769',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                            fontSize: 25,
+                        },
+                    }}
+                    component={GenerateFold}
+                    />
+
             </StackNav.Navigator>
 
         </NavigationContainer>

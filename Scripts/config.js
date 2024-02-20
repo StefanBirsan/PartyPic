@@ -15,17 +15,12 @@ const firebaseConfig = {
     databaseURL : "https://partypic-80f7f-default-rtdb.europe-west1.firebasedatabase.app",
 };
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+
+const app = firebase.initializeApp(firebaseConfig)
 
 const auth = firebase.auth()
 
-const { db } = getDatabase();
+const db  = getDatabase( app );
 
-export {auth};
-
-export { db }
-
-export { firebase };
+export {auth, db, firebase};
 

@@ -1,15 +1,15 @@
 import React  from 'react';
 import {Image, Platform, StyleSheet,TouchableOpacity, View} from "react-native";
-//import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const ButtonGEn = () => {
 
-    //const navigation = useNavigation();
+    const navigation = useNavigation();
 
     return (
         <TouchableOpacity
 
-            //onPress={() => navigation.navigate("Foldergen")}
+            onPress={() => navigation.navigate("Foldergen")}
         >
             <View style={[styles.viewsmek, Platform.OS === 'android' && styles.androidShadow]}>
 

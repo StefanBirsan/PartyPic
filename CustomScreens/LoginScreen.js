@@ -3,13 +3,18 @@ import {StyleSheet, Text, View, KeyboardAvoidingView} from "react-native";
 import {useEffect, useState} from "react";
 import {auth} from "../Scripts/config";
 import {useNavigation} from "@react-navigation/native";
+import { db } from "../Scripts/config";
+import {ref , set } from 'firebase/database';
 
 const LoginScreen = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+
     const navigation = useNavigation()
+
+
 
     useEffect(() => {
         const logged = auth.onAuthStateChanged(user => {
@@ -29,9 +34,24 @@ const LoginScreen = () => {
 
         auth
             .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const  user = userCredentials.user;
+            .then(async (userCredentials) => {
+                const user = userCredentials.user;
                 console.log(user.email);
+
+                let id = userCredentials.user.uid;
+
+                const dataAddOn = async (userUID) => {
+
+                    await set(ref(db, `users/${userUID}`), {
+                        folder: {},
+                    })
+
+                        .catch((error) => console.error(error));
+                };
+
+                await dataAddOn(user.uid);
+
+
             })
             .catch(error => alert(error.message))
 

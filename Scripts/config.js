@@ -1,5 +1,6 @@
 import firebase from "firebase/compat";
 import 'firebase/compat/storage';
+import { getDatabase } from 'firebase/database'
 
 
 
@@ -10,7 +11,8 @@ const firebaseConfig = {
     storageBucket: "partypic-80f7f.appspot.com",
     messagingSenderId: "200995720922",
     appId: "1:200995720922:web:5a58fe1ed88feac0f0dfe3",
-    measurementId: "G-NQ9V1LFPWX"
+    measurementId: "G-NQ9V1LFPWX",
+    databaseURL : "https://partypic-80f7f-default-rtdb.europe-west1.firebasedatabase.app",
 };
 
 if (!firebase.apps.length) {
@@ -19,7 +21,11 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth()
 
+const { db } = getDatabase();
+
 export {auth};
+
+export { db }
 
 export { firebase };
 

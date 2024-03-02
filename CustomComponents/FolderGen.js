@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, TextInput, View, Platform, Text } from "react-native";
 import ButtonGEn from "./ButtonGEn";
 import ButtonFind from "./ButtonFind";
+import {useNavigation} from "@react-navigation/native";
 
 const FolderGen = () => {
     const [folderName, setFolderName] = useState('');
+
+    const navigation = useNavigation();
 
     // Function to handle text input change
     const handleTextChange = newText => {
@@ -16,18 +19,13 @@ const FolderGen = () => {
     return (
         <View style={[styles.container, Platform.OS === 'android' && styles.androidShadow]}>
             <Text style={styles.title}>Create or join a folder</Text>
-            <TextInput
-                style={[styles.input, Platform.OS === 'android' && styles.androidShadow]}
-                placeholder="Folder name:"
-                value={folderName}
-                onChangeText={handleTextChange}
-                maxLength={20}
-            />
+
             <View style={styles.buttonsdown}>
                 <Text style={styles.text1}>Create</Text>
-                <ButtonGEn></ButtonGEn>
-                <Text style={styles.text2}>Search Folder</Text>
-                <ButtonFind></ButtonFind>
+                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("Foldergen")}></ButtonGEn>
+                <Text style={styles.text2}>Scan QR</Text>
+                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("Cam")}></ButtonGEn>
+
             </View>
 
         </View>
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 15,
         color: '#F6B17A',
-        marginLeft: 10,
+        marginLeft: 5,
         marginRight: 10,
         marginTop: 5,
     },
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 15,
         color: '#F6B17A',
-        marginLeft: 15,
+        marginLeft: 40,
         marginRight: 10,
         marginTop: 5,
     },

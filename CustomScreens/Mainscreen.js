@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import NavigPush from "../CustomComponents/NavigPush";
 import FolderGen from "../CustomComponents/FolderGen";
@@ -6,13 +6,15 @@ import FolderDetails from "../CustomComponents/FolderDetails";
 import UserCard from "../CustomComponents/UserCard";
 import ButtonUp from "../CustomComponents/ButtonUP";
 
+import { Image } from 'react-native';
+
 const BottomTab = createBottomTabNavigator();
 
 const MainScreen = () => {
     return(
-        <View style={styles.container}>
-
-            <UserCard></UserCard>
+        <ScrollView style={{flex:1}} contentContainerStyle={styles.container}>
+            <View style={{ height: 20}} />
+            <Image source={{ uri: 'https://quickchart.io/qr?text=378192'}} style={{width: 200, height: 200}}/>
 
             <FolderGen></FolderGen>
 
@@ -36,13 +38,12 @@ const MainScreen = () => {
 
 
 
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#2D3250',
         alignItems: 'center',
         justifyContent: 'center',

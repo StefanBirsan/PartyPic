@@ -14,6 +14,7 @@ const MainScreen = () => {
     return(
         <ScrollView style={{flex:1}} contentContainerStyle={styles.container}>
             <View style={{ height: 20}} />
+
             <Image source={{ uri: 'https://quickchart.io/qr?text=378192'}} style={{width: 200, height: 200}}/>
 
             <FolderGen></FolderGen>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, View, Platform, Text } from "react-native";
+import { StyleSheet, View, Platform, Text } from "react-native";
 import ButtonGEn from "./ButtonGEn";
-import ButtonFind from "./ButtonFind";
 import {useNavigation} from "@react-navigation/native";
 
 const FolderGen = () => {
@@ -9,10 +8,10 @@ const FolderGen = () => {
 
     const navigation = useNavigation();
 
-    // Function to handle text input change
     const handleTextChange = newText => {
-        // Remove special characters using regex
+
         const filteredText = newText.replace(/[^\w\s]/gi, '');
+
         setFolderName(filteredText);
     };
 
@@ -22,9 +21,9 @@ const FolderGen = () => {
 
             <View style={styles.buttonsdown}>
                 <Text style={styles.text1}>Create</Text>
-                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("Foldergen")}></ButtonGEn>
+                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("GenerateFold")}></ButtonGEn>
                 <Text style={styles.text2}>Scan QR</Text>
-                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("Cam")}></ButtonGEn>
+                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("ScanQR")}></ButtonGEn>
 
             </View>
 

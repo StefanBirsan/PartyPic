@@ -4,130 +4,152 @@ import MainScreen from "./CustomScreens/Mainscreen"
 import {createStackNavigator} from "@react-navigation/stack";
 import LoginScreen from "./CustomScreens/LoginScreen";
 import GenerateFold from "./CustomScreens/GenerateFold";
-import {View} from "react-native";
-import {Camera, CameraView} from "expo-camera/next";
-import {useState} from "react";
+import CamScreen from "./CustomScreens/CamScreen";
+import {useEffect, useState} from "react";
+import RegisterScreen from "./CustomScreens/RegisterScreen";
+import { auth } from "./Scripts/config";
+import {onAuthStateChanged} from "@firebase/auth";
+
 
 const StackNav = createStackNavigator();
 
-const Cam = () => {
-const [scanned, setScanned] = useState(false);
 
+const AuthStack = () => {
     return (
-        <View style={{ flex: 1}}>
-            <CameraView style={{flex: 1}} barCodeScannerSettings={{
-                barCodeTypes: ["qr"],
-            }} onBarcodeScanned={!scanned ? (event) => {
-                setScanned(true);
-                console.log(event.data)} : () => {}} />
-        </View>
-    )
+        <StackNav.Navigator
+            initialRouteName={'Login'}
+        >
+
+            <StackNav.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{
+                    title: 'Login',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#3B3486',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+            <StackNav.Screen
+                name="Register"
+                component={RegisterScreen}
+                options={{
+                    title: 'Register',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#424769',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+        </StackNav.Navigator>
+    );
 }
+
+const AppStack = () => {
+    return (
+        <StackNav.Navigator
+            initialRouteName={'MainScreen'}
+        >
+            <StackNav.Screen
+                name="Home"
+                component={MainScreen}
+                options={{
+                    title: 'Tags',
+                    headerTintColor: '#424769',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    },
+                }}
+            />
+
+            <StackNav.Screen
+                name="Folderscreen"
+                component={Folderscreen}
+                options={{
+                    title: 'Folders',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#424769',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+
+            <StackNav.Screen
+                name="GenerateFold"
+                component={GenerateFold}
+                options={{
+                    title: 'Generate',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#424769',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+
+            <StackNav.Screen
+                name="ScanQR"
+                component={CamScreen}
+                options={{
+                    title: 'Scan',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#424769',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+
+
+
+
+
+
+        </StackNav.Navigator>
+    );
+}
+
 
 export default function App() {
 
+    const [isLogged, setIsLogged] = useState(true);
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsLogged(true);
+            } else {
+                setIsLogged(false);
+            }
+        });
+    }, []);
 
     return (
         <NavigationContainer>
-
-            <StackNav.Navigator
-                initialRouteName={'Login'}
-                headerShown="false"
-            >
-
-                <StackNav.Screen
-                    name="Login"
-                    component={LoginScreen}
-                    options={{
-                        title: 'Login',
-                        headerStyle: {
-                            backgroundColor: '#F6B17A',
-                        },
-                        headerTintColor: '#424769',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                            fontSize: 25,
-
-
-                        },
-                    }}
-
-                />
-
-
-                <StackNav.Screen
-
-                    options={{
-                        title: 'PartyPic',
-                        headerStyle: {
-                            backgroundColor: '#F6B17A',
-                        },
-                        headerTintColor: '#424769',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                            fontSize: 25,
-                        },
-                    }}
-                    name="Home"
-                    component={MainScreen} />
-
-                <StackNav.Screen
-
-                    options={{
-                        title: 'Folder',
-                        headerStyle: {
-                            backgroundColor: '#F6B17A',
-                        },
-                        headerTintColor: '#424769',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                            fontSize: 25,
-                        },
-                    }}
-
-                    name="Folderscreen"
-
-                    component={Folderscreen}
-                />
-
-                <StackNav.Screen
-                    name="Foldergen"
-
-                    options={{
-                        title: 'Folder generate',
-                        headerStyle: {
-                            backgroundColor: '#F6B17A',
-                        },
-                        headerTintColor: '#424769',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                            fontSize: 25,
-                        },
-                    }}
-                    component={GenerateFold}
-                    />
-
-                <StackNav.Screen
-                    name="Cam"
-
-                    options={{
-                        title: 'Folder generate',
-                        headerStyle: {
-                            backgroundColor: '#F6B17A',
-                        },
-                        headerTintColor: '#424769',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                            fontSize: 25,
-                        },
-                    }}
-                    component={Cam}
-                />
-
-
-
-            </StackNav.Navigator>
-
+                {!isLogged ? <AuthStack /> : <AppStack />}
         </NavigationContainer>
 
 

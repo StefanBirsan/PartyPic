@@ -1,98 +1,157 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { auth } from "../Scripts/config";
-import { useNavigation } from '@react-navigation/native';
+import {StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity} from "react-native";
+import React, {useState} from "react";
+import {auth, db} from "../Scripts/config";
+import {createUserWithEmailAndPassword} from "@firebase/auth";
+import {ref , set } from 'firebase/database';
 
-const LoginScreen = () => {
+
+const RegisterScreen = () => {
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const navigation = useNavigation(); // Get the navigation object
+    //const [username, setUsername] = useState('')
 
-    const handleLogin = () => {
-        auth
-            .signInWithEmailAndPassword(email, password)
-            .then(userCredentials => {
+    const dataAddOn =  (userUID) => {
+        console.log(userUID)
+        set(ref(db, `users/${userUID}`), {
+
+
+                folder_id : "id",
+                share_code : "code",
+                time_created_at : "none",
+
+            },
+        )
+            .then(
+                response => {
+                    console.log("Am ajuns aici")
+                }
+            )
+            .catch((error) => console.error(error));
+        console.log("Am ajuns si aci")
+    };
+
+    const handleSingUP =  async () => {
+
+        await createUserWithEmailAndPassword(auth, email, password)
+            .then( (userCredentials) => {
                 const user = userCredentials.user;
-                console.log('Logged in with: ', user.email)
+                console.log(user.email);
+
+                let id = userCredentials.user.uid;
+                dataAddOn(id)
+
             })
             .catch(error => alert(error.message))
+
     };
+
+
 
     return (
         <KeyboardAvoidingView
+
             style={styles.container}
+
             behavior='padding'
+
         >
-            <Text style={styles.titlez}> partypic</Text>
             <View style={styles.inputcontainer}>
+
+
                 <TextInput
+
                     placeholder="Email"
+
                     value={email}
                     onChangeText={text => setEmail(text)}
+
                     style={styles.inpu}
                     autoCapitalize="none"
-                />
+                >
+                </TextInput>
+
                 <TextInput
+
                     placeholder="Password"
+
                     value={password}
-                    onChangeText={text => setPassword(text)}
+                    onChangeText={text => setPassword(text) }
+
                     style={styles.inpu}
                     secureTextEntry={true}
                     autoCapitalize="none"
-                />
+                >
+                </TextInput>
+
                 <View style={styles.buttonContainer}>
+
+
+
                     <TouchableOpacity
-                        onPress={handleLogin}
-                        style={styles.buttos}
-                    >
-                        <Text style={styles.buttontext}> Login </Text>
-                    </TouchableOpacity>
-                    <Text style={styles.textsme1}>Don't have an account?</Text>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate("Register")} // Using navigation object to navigate
+                        onPress={handleSingUP}
                         style={[styles.buttos, styles.buttonoutline]}
                     >
+
                         <Text style={styles.buttontext}> Register </Text>
+
                     </TouchableOpacity>
+
                 </View>
+
             </View>
+
         </KeyboardAvoidingView>
     )
 }
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2D3250'
+        backgroundColor: '#332941'
+
     },
+
     inputcontainer: {
         width: '80%',
         padding: 15,
         borderRadius: 10,
     },
-    buttos: {
+
+    buttos : {
+
         backgroundColor: '#F6B17A',
         width: '100%',
         padding: 15,
         borderRadius: 10,
         marginBottom: 10,
         alignItems: 'center',
-        elevation: 100,
+
     },
-    buttontext: {
-        color: 'black',
+
+    buttontext : {
+
+        color : 'black',
         fontWeight: '700',
+
+
     },
-    buttonContainer: {
+
+    buttonContainer : {
+
         width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,
         marginLeft: 32,
+
     },
+
     inpu: {
+
         paddingHorizontal: 15,
         backgroundColor: 'white',
         paddingVertical: 10,
@@ -100,33 +159,23 @@ const styles = StyleSheet.create({
         marginTop: 5,
         padding: 15,
         borderRadius: 10,
+
     },
+
     buttonoutline: {
+
         backgroundColor: 'white',
         marginTop: 5,
-        borderColor: '#7077A1',
+        borderColor: '#864AF9',
         borderWidth: 4,
+
     },
-    titlez: {
-        color: 'white',
-        fontFamily: 'Roboto',
-        fontWeight: '400',
-        fontSize: 70,
-        lineHeight: 115.2,
-        marginBottom: 60,
-        marginRight: 25,
-    },
-    textsme1: {
-        fontSize: 13,
-        fontFamily: 'Roboto',
-        color: 'white',
-        marginTop: 20,
-    },
-    textsme2: {
-        fontSize: 13,
-        fontFamily: 'Roboto',
-        color: 'white',
-    },
+
+
+
+
+
 });
 
-export default LoginScreen;
+
+export default RegisterScreen

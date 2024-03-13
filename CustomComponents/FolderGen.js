@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Platform, Text } from "react-native";
 import ButtonGEn from "./ButtonGEn";
 import { useNavigation } from "@react-navigation/native";
@@ -119,7 +119,16 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         fontSize: 17,
         fontWeight: 'bold',
-        color: '#F6B17A'
+        color: '#F6B17A',
+        fontFamily: 'monospace',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 15,
+        borderWidth: 1,
+        borderColor: '#F6B17A',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 10,
     },
     buttonsdown: {
         flexDirection: "row",
@@ -132,6 +141,10 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginRight: 10,
         marginTop: 5,
+        fontFamily: 'monospace',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 15,
     },
     text2: {
         fontWeight: "bold",
@@ -140,6 +153,10 @@ const styles = StyleSheet.create({
         marginLeft: 40,
         marginRight: 10,
         marginTop: 5,
+        fontFamily: 'monospace',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 15,
     },
 });
 

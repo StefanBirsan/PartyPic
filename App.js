@@ -9,6 +9,8 @@ import {useEffect, useState} from "react";
 import RegisterScreen from "./CustomScreens/RegisterScreen";
 import { auth } from "./Scripts/config";
 import {onAuthStateChanged} from "@firebase/auth";
+import CreateScreen from "./CustomScreens/CreateScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const StackNav = createStackNavigator();
@@ -52,6 +54,32 @@ const AuthStack = () => {
             />
         </StackNav.Navigator>
     );
+}
+
+const CreateStack = () => {
+    return (
+        <StackNav.Navigator
+            initialRouteName={'CreateScreen'}
+        >
+            <StackNav.Screen
+                name="CreateScreen"
+                component={CreateScreen}
+                options={{
+                    title: 'Create',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#2D3250',
+                    headerShown: false,
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+        </StackNav.Navigator>
+    );
+
 }
 
 const AppStack = () => {
@@ -136,6 +164,7 @@ const AppStack = () => {
 export default function App() {
 
     const [isLogged, setIsLogged] = useState(true);
+    const [hasFolder, setHasFolder] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -147,9 +176,32 @@ export default function App() {
         });
     }, []);
 
+    useEffect(() => {
+        const checkUserFolder = async () => {
+            const userFolder = await AsyncStorage.getItem('userFolder');
+            if (userFolder === undefined) {
+                return; // Exit the function if userToken is undefined
+            }
+
+            try {
+                if (userFolder === 'yes') {
+                    setHasFolder(true);
+                } else {
+                    setHasFolder(false);
+                }
+            } catch (error) {
+                console.error('Error retrieving user token:', error);
+                setHasFolder(false);
+            }
+        };
+
+        checkUserFolder();
+    }, []);
+
+
     return (
         <NavigationContainer>
-                {!isLogged ? <AuthStack /> : <AppStack />}
+                {!isLogged ? <AuthStack /> :!hasFolder ? <CreateStack /> : <AppStack />}
         </NavigationContainer>
 
 

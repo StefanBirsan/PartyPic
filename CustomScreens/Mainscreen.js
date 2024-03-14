@@ -1,80 +1,121 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React from "react";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import NavigPush from "../CustomComponents/NavigPush";
-import FolderGen from "../CustomComponents/FolderGen";
-import FolderDetails from "../CustomComponents/FolderDetails";
 import ButtonUp from "../CustomComponents/ButtonUP";
-
-import { Image } from 'react-native';
-
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MainScreen = () => {
-    return(
-        <ScrollView style={{flex:1}} contentContainerStyle={styles.container}>
-            <View style={{ height: 20}} />
+    const navigation = useNavigation();
 
-            <Image source={{ uri: 'https://quickchart.io/qr?text=378192'}} style={{width: 200, height: 200}}/>
+    const handleLogoutPress = async () => {
+        try {
 
-            <FolderGen></FolderGen>
+            await AsyncStorage.removeItem('searchedValue');
 
-            <FolderDetails></FolderDetails>
+            console.log('AsyncStorage values deleted successfully');
 
-            <View>
+        } catch (error) {
 
-                <Text style={styles.texts1}>Upload files              See the folder</Text>
+            console.error('Error deleting AsyncStorage values:', error);
+
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+
+            {/* Title View */}
+            <View style={styles.titleContainer}>
+
+                <Text style={styles.title}>partypic</Text>
 
             </View>
 
-            <View style={styles.bottomrow}>
+            {/* Buttons Container */}
+            <View style={styles.buttonsContainer}>
 
-                <ButtonUp styles={styles.bottomup}></ButtonUp>
+                {/* Folder Button */}
 
-                <Text>                   </Text>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Folderscreen")}>
 
-                <NavigPush></NavigPush>
+                    <Text style={styles.buttonText}>Folders</Text>
+
+                </TouchableOpacity>
+
+
+                <TouchableOpacity style={styles.button} >
+
+                    <Text style={styles.buttonText}>Download as ZIP</Text>
+
+                </TouchableOpacity>
+
+
+
+                {/* Logout Button */}
+
+                <TouchableOpacity style={styles.button} onPress={handleLogoutPress}>
+
+                    <Text style={styles.buttonText}>Logout</Text>
+
+                </TouchableOpacity>
+
+                {/* Upload Files */}
+
+                <ButtonUp />
 
             </View>
-
-
-
-        </ScrollView>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#2D3250',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    titleContainer: {
+        paddingTop: 20,
+        paddingBottom: 10,
+        width: '100%',
+        alignItems: 'center',
 
     },
-    textsmek: {
-        paddingBottom: 50,
-        color: "#fff",
-        fontSize: 34,
+    title: {
+        color: 'white',
+        fontFamily: 'Roboto',
+        fontWeight: '400',
+        fontSize: 70,
+        lineHeight: 115.2,
     },
-    img : {
-        width: 150,
-        height: 150,
-    },
-
-    bottomrow : {
-        flexDirection : "row",
+    buttonsContainer: {
+        borderRadius: 25,
+        width: 340,
+        height: 320,
+        backgroundColor: '#424769',
+        alignItems: 'center',
+        justifyContent: 'center',
         marginTop: 20,
-        justifyContent: 'space-between',
-        marginBottom: 10,
+        marginBottom: 20,
     },
-
-    bottomup : {
-        marginRight: 20,
+    button: {
+        backgroundColor: '#F6B17A',
+        borderRadius: 10,
+        width: '80%',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
     },
-
-    texts1: {
-        fontWeight: "bold",
-        fontSize: 17,
-        color: '#F6B17A',
-        marginTop: 10,
+    buttonText: {
+        color: '#000',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 
 });
+
 
 export default MainScreen;

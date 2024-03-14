@@ -198,19 +198,15 @@ export default function App() {
 
     useEffect(() => {
         const checkUserFolder = async () => {
-            const userFolder = await AsyncStorage.getItem('userFolder');
-            if (userFolder === undefined) {
-                return; // Exit the function if userToken is undefined
-            }
-
             try {
-                if (userFolder === 'yes') {
+                const searchedValue = await AsyncStorage.getItem('searchedValue');
+                if (searchedValue) {
                     setHasFolder(true);
                 } else {
                     setHasFolder(false);
                 }
             } catch (error) {
-                console.error('Error retrieving user token:', error);
+                console.error('Error retrieving searched value:', error);
                 setHasFolder(false);
             }
         };
@@ -221,7 +217,13 @@ export default function App() {
 
     return (
         <NavigationContainer>
-                {!isLogged ? <AuthStack /> :!hasFolder ? <CreateStack /> : <AppStack />}
+            {!isLogged ? (
+                <AuthStack />
+            ) : hasFolder ? (
+                <AppStack />
+            ) : (
+                <CreateStack />
+            )}
         </NavigationContainer>
 
 

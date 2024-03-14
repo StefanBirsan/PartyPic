@@ -92,6 +92,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
+        marginTop: 10,
+
     }
 });
 

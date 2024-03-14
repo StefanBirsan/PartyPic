@@ -86,8 +86,8 @@ const FolderGen = () => {
             <View style={styles.buttonsdown}>
                 <Text style={styles.text1}>Create</Text>
                 <ButtonGEn imgSrc='' onPress={() => createOn(userId)}></ButtonGEn>
-                <Text style={styles.text2}>Scan QR</Text>
-                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("ScanQR")}></ButtonGEn>
+                <Text style={styles.text2}>Join</Text>
+                <ButtonGEn imgSrc='' onPress={() => navigation.navigate("SearchFolder")}></ButtonGEn>
             </View>
         </View>
     );
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 15,
         color: '#F6B17A',
-        marginLeft: 40,
+        marginLeft: 60,
         marginRight: 10,
         marginTop: 5,
         fontFamily: 'monospace',

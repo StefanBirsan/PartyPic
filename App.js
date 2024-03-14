@@ -11,6 +11,7 @@ import { auth } from "./Scripts/config";
 import {onAuthStateChanged} from "@firebase/auth";
 import CreateScreen from "./CustomScreens/CreateScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SearchScreen from "./CustomScreens/SearchScreen";
 
 
 const StackNav = createStackNavigator();
@@ -77,6 +78,39 @@ const CreateStack = () => {
                     },
                 }}
             />
+
+            <StackNav.Screen
+                name="SearchFolder"
+                component={SearchScreen}
+                options={{
+                    title: 'Search',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#424769',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+
+            <StackNav.Screen
+                name="ScanQR"
+                component={CamScreen}
+                options={{
+                    title: 'Scan',
+                    headerStyle: {
+                        backgroundColor: '#F6B17A',
+                    },
+                    headerTintColor: '#424769',
+                    headerTitleStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 25,
+                    },
+                }}
+            />
+
         </StackNav.Navigator>
     );
 
@@ -135,21 +169,7 @@ const AppStack = () => {
                 }}
             />
 
-            <StackNav.Screen
-                name="ScanQR"
-                component={CamScreen}
-                options={{
-                    title: 'Scan',
-                    headerStyle: {
-                        backgroundColor: '#F6B17A',
-                    },
-                    headerTintColor: '#424769',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                        fontSize: 25,
-                    },
-                }}
-            />
+
 
 
 

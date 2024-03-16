@@ -1,6 +1,6 @@
 # PartyPic , an app made entirely in React Native
 
-##📷📸📷📸📷📸📷📸📷📸📷📸📷📸📷📸📷📸
+📷📸📷📸📷📸📷📸📷📸📷📸📷📸📷📸📷📸
 
 
 > This app is made for people who organise events and want to have one folder for every picture of videos took doring the said event.

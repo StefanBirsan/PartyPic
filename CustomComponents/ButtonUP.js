@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView , Dimensions} from "react-native";
-import { firebase } from "../Scripts/config";
+import {db, firebase} from "../Scripts/config";
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {get, ref} from "firebase/database";
 
 const ButtonUp = () => {
     const [image, setImage] = useState(null);
@@ -39,10 +41,17 @@ const ButtonUp = () => {
                 xhr.send(null);
             });
 
-            const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-            const ref = firebase.storage().ref().child(`images/${filename}`);
+            const uid = await AsyncStorage.getItem('searchedValue');
+            const snapshot = await get(ref(db, `users/${uid}/folder_id`));
+            const folderId = snapshot.val();
+            console.log('Snapshot string:', folderId);
+            const snapshotW = folderId.replace(/"/g, '');
+            console.log('Folder ID without quotes:', snapshotW);
 
-            await ref.put(blob);
+            const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+            const storageRef = firebase.storage().ref().child(`${snapshotW}/${filename}`);
+
+            await storageRef.put(blob);
             setUploading(false);
             Alert.alert('File has been Uploaded!');
             setImage(null);

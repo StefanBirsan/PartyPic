@@ -18,9 +18,10 @@ const FolderSearch = () => {
         try {
             const snapshot = await get(ref(db, `share_code/${code}`));
             const value = snapshot.val();
-            if (value) {
-                await AsyncStorage.setItem('searchedValue', value);
-                console.log(`Value stored for code ${code}: ${value}`);
+            const valueS = value.replace(/"/g, '');
+            if (valueS) {
+                await AsyncStorage.setItem('searchedValue', valueS);
+                console.log(`Value stored for code ${code}: ${valueS}`);
             } else {
                 console.log(`No value found for code ${code}`);
                 Alert.alert('No Value Found', `No value found for code ${code}`);

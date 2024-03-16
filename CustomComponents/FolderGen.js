@@ -4,6 +4,7 @@ import ButtonGEn from "./ButtonGEn";
 import { useNavigation } from "@react-navigation/native";
 import { ref, set } from 'firebase/database';
 import { auth, db } from "../Scripts/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const FolderGen = () => {
 
@@ -59,7 +60,10 @@ const FolderGen = () => {
             .catch((error) => console.error(error));
     };
 
-    const createOn = (userUID) => {
+    const createOn = async (userUID) => {
+
+        await AsyncStorage.setItem('searchedValue', userUID);
+
         let share_code = generateSixDigitNumber();
         let folder_id = generateRandomString();
         let time_created_at = getTimeAndDayString();

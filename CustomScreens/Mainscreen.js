@@ -1,9 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import NavigPush from "../CustomComponents/NavigPush";
 import ButtonUp from "../CustomComponents/ButtonUP";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {get, ref} from "firebase/database";
+import {db, firebase} from "../Scripts/config";
+import Share from "react-native-share";
 
 const MainScreen = () => {
     const navigation = useNavigation();
@@ -21,6 +23,20 @@ const MainScreen = () => {
 
         }
     };
+
+    const shareCode = async () => {
+        try {
+            const uid = await AsyncStorage.getItem('searchedValue');
+            const snapshot = await get(ref(db, `users/${uid}/share_code`));
+            const shareCode = snapshot.val();
+            const shareCodeW = shareCode.replace(/"/g, '');
+
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     return (
         <View style={styles.container}>
@@ -40,6 +56,18 @@ const MainScreen = () => {
                 <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Folderscreen")}>
 
                     <Text style={styles.buttonText}>Folders</Text>
+
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} >
+
+                    <Text style={styles.buttonText}>Share Code</Text>
+
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} >
+
+                    <Text style={styles.buttonText}>Share QR</Text>
 
                 </TouchableOpacity>
 
@@ -93,7 +121,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         borderRadius: 25,
         width: 340,
-        height: 320,
+        height: 500,
         backgroundColor: '#424769',
         alignItems: 'center',
         justifyContent: 'center',

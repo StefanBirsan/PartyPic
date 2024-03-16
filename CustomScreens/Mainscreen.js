@@ -5,7 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {get, ref} from "firebase/database";
 import {db, firebase} from "../Scripts/config";
-import Share from "react-native-share";
+import {Share} from "react-native";
+import QRCode from "react-native-qrcode-svg";
 
 const MainScreen = () => {
     const navigation = useNavigation();
@@ -31,12 +32,34 @@ const MainScreen = () => {
             const shareCode = snapshot.val();
             const shareCodeW = shareCode.replace(/"/g, '');
 
-
+            if (shareCodeW) {
+                await Share.share({
+                    message: `Join my folder on PartyPic: ${shareCodeW}`,
+                });
+            } else {
+                console.log("Share code not found");
+            }
         } catch (error) {
             console.error(error);
         }
     };
 
+
+    const shareQRCode = async () => {
+        try {
+            const uid = await AsyncStorage.getItem("searchedValue");
+            const snapshot = await get(ref(db, `users/${uid}/share_code`));
+            const shareCode = snapshot.val();
+            const shareCodeW = shareCode.replace(/"/g, '');
+            const qrCodeUrl = `https://quickchart.io/qr?text=${shareCodeW}`;
+
+            await Share.share({
+                message: `Join my folder on PartyPic: ${qrCodeUrl}`,
+            });
+        } catch (error) {
+            console.error("Error sharing QR code:", error);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -59,13 +82,13 @@ const MainScreen = () => {
 
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button} onPress={shareCode} >
 
                     <Text style={styles.buttonText}>Share Code</Text>
 
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button} onPress={shareQRCode} >
 
                     <Text style={styles.buttonText}>Share QR</Text>
 
